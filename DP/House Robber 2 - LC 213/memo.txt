@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int helper(vector<int>& nums, int i, vector<int> &dp, int n){
+        if(i>=n) return 0;
+
+        if(dp[i]!=-1){
+            return dp[i];
+        }
+
+        int pick =  nums[i] + helper(nums,i+2,dp,n);
+        int unpick = helper(nums,i+1,dp,n);
+
+        dp[i] = max(pick,unpick);
+        return dp[i];
+
+    }
+    int rob(vector<int>& nums) {
+        int n=nums.size();
+        vector<int> dp(n,-1);
+        vector<int> dp2(n,-1);
+        int ans = max(nums[0] + helper(nums,2,dp,n-1), helper(nums,1,dp2,n));
+
+        return ans;
+    }
+};
