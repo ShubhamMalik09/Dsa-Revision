@@ -1,0 +1,25 @@
+#tree based input 
+# two directly connected nodes cant be in solution
+
+class Solution {
+public:
+    int helper(TreeNode* root, unordered_map<TreeNode*,int> &s){
+        if(!root) return 0;
+        if(s.find(root)!=s.end()){
+            return s[root];
+        }
+        int pick =0;
+        if(root->left) pick += helper(root->left->left, s) + helper(root->left->right, s);
+        if(root->right) pick += helper(root->right->left, s) + helper(root->right->right, s);
+
+        int unpick = helper(root->left, s) + helper(root->right, s);
+
+        s[root] =  max(root->val + pick, unpick);
+        return s[root];
+
+    }
+    int rob(TreeNode* root) {
+        unordered_map<TreeNode*,int> s;
+        return helper(root,s);
+    }
+};
