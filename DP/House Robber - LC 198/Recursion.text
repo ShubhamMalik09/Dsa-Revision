@@ -1,0 +1,19 @@
+#Pick, non-pick approach
+#Gives TLE
+
+
+class Solution {
+public:
+    int helper(vector<int>& nums, int i){
+        if(i>=nums.size()) return 0;
+        int unpick = helper(nums,i+1);
+        int pick = helper(nums,i+2) + nums[i];
+
+        return max(unpick, pick);
+
+    }
+    int rob(vector<int>& nums) {
+        int ans = helper(nums,0);
+        return ans;
+    }
+};
