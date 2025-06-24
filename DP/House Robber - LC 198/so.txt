@@ -1,0 +1,22 @@
+class Solution {
+public:
+
+    int helper(vector<int>& nums){
+        int n = nums.size();
+        int last2 = nums[n-1];
+        int last = 0;
+
+        for(int i=n-2;i>=0;i--){
+            int unpick = last2;
+            int pick = last + nums[i];
+            last = last2;
+            last2 = max(unpick, pick);
+        }
+
+        return last2;
+    }
+    int rob(vector<int>& nums) {
+        int ans = helper(nums);
+        return ans;
+    }
+};

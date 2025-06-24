@@ -1,0 +1,27 @@
+#pick-nonpick approach
+
+class Solution {
+public:
+
+    int helper(vector<int>& nums){
+        int n = nums.size();
+        vector<int> dp(n,-1);
+        dp[n-1] = nums[n-1];
+
+        for(int i=n-2;i>=0;i--){
+            int ans = 0;
+            if(i+2<n){
+                ans = dp[i+2];
+            }
+            int unpick = dp[i+1];
+            int pick = ans + nums[i];
+            dp[i] = max(unpick, pick);
+        }
+
+        return dp[0];
+    }
+    int rob(vector<int>& nums) {
+        int ans = helper(nums);
+        return ans;
+    }
+};
