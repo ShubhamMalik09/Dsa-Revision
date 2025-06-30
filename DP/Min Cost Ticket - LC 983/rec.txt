@@ -1,0 +1,22 @@
+# similar to coin change 
+# loop thorugh all ticket prices and add cost if lastDay < currentDay
+# update lastday according to ticket selected 
+
+class Solution {
+public:
+    int helper(vector<int>& days, vector<int>& costs, int i,int lastDay){
+        if(i>=days.size()) return 0;
+        if(lastDay >= days[i]){
+            return helper(days, costs, i+1,lastDay);
+        }
+        int cost1day = costs[0] + helper(days,costs,i+1,days[i]);
+        int cost7days = costs[1] + helper(days, costs, i+1, days[i] + 6);
+        int cost30days = costs[2] + helper(days,costs,i+1,days[i]+29);
+
+        return min(cost1day, min(cost7days,cost30days));
+
+    }
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        return helper(days,costs,0,0);
+    }
+};

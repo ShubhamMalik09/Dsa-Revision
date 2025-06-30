@@ -1,0 +1,36 @@
+# in this we have given a coins array using this we have to find mini number of coins used to make that amount
+# for this we have to iterate at all coins at every run to find all the coins combination that can make that amount
+# we can use any coin any number of times
+
+class Solution {
+public:
+    int helper(vector<int> &coins, int amount ,vector<int> &dp){
+        if(amount == 0) return 0;
+
+        if(dp[amount]!=-1){
+            return dp[amount];
+        }
+
+        int mini = INT_MAX;
+        for(int i=0;i<coins.size();i++){
+            if(amount-coins[i] >=0){
+                int ans = helper(coins, amount-coins[i],dp);
+                if(ans != INT_MAX){
+                    mini = min(mini,ans+1);
+                }
+            }
+        }
+
+        dp[amount] = mini;
+
+        return dp[amount];
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        vector<int> dp(amount+1,-1);
+        int ans = helper(coins,amount,dp);
+        if(ans == INT_MAX){
+            return -1;
+        }
+        return ans;
+    }
+};
