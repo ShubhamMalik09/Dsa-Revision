@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int helperRec(string& s1, string& s2, int i, int j){
+        if(i>=s1.length() || j>=s2.length()) return 0;
+
+        int ans=0;
+        if(s1[i]==s2[j]){
+            ans = 1 + helperRec(s1,s2,i+1,j+1);
+        }
+        else{
+            ans = max(helperRec(s1,s2,i+1,j), helperRec(s1,s2,i,j+1));
+        }
+
+        return ans;
+    }
+    int longestCommonSubsequence(string text1, string text2) {
+        return helperRec(text1,text2,0,0);
+    }
+};
