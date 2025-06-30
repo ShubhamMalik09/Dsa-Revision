@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int helperMemo(int capacity, vector<int> &wt, vector<int> &profit, int i, int n, vector<vector<int>> &dp){
+    if(i>=n){
+        return 0;
+    }
+
+    if(dp[capacity][i]!=-1){
+        return dp[capacity][i];
+    }
+
+    int include = 0;
+    if(wt[i]<=capacity){
+        include = profit[i] + helperMemo(capacity-wt[i], wt, profit, i+1,n,dp);
+    }
+
+    int exclude = helperMemo(capacity,wt,profit,i+1,n,dp);
+
+    dp[capacity][i] = max(include, exclude);
+
+    return dp[capacity][i];
+}
+
+int main(){
+    int capacity = 50;
+    vector<int> wt = {10,20,30};
+    vector<int> profit = {60,100,120};
+
+    int n=3;
+    vector<vector<int>> dp(capacity+1,vector<int> (n,-1) );
+
+
+    int ans = helperMemo(capacity, wt, profit,0,n,dp);
+
+    cout<< "Max Profit" << ans << endl;
+
+    return 0;
+}

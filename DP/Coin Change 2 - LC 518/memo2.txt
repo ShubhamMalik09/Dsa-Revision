@@ -1,6 +1,7 @@
 # first try to make all combination from i denomination if not then switch to next denomination
 # pick non pick approach
 # 2d dp
+# 0/1 knapsack approach
 
 class Solution {
 public:
