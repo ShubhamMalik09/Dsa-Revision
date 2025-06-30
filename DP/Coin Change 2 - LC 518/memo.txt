@@ -1,0 +1,30 @@
+# same as coin change but in this we have to find number of ways in which amount can make
+# iterate through all coins from idx to end
+# idx to maintain to not remove combination which are already calculated means (2,2,5) and (5,2,2) are same
+
+class Solution {
+public:
+    int helper(vector<int>& coins, int amount,int idx, vector<vector<int>> &dp){
+        if(amount == 0){
+            return 1;
+        }
+
+        if(dp[amount][idx]!=-1){
+            return dp[amount][idx];
+        }
+
+        int ans =0;
+        for(int i=idx;i<coins.size();i++){
+            if(amount - coins[i] >=0){
+                ans += helper(coins,amount-coins[i],i,dp);
+            }
+        }
+
+        dp[amount][idx] = ans;
+        return dp[amount][idx];
+    }
+    int change(int amount, vector<int>& coins) {
+        vector<vector<int>> dp(amount+1,vector<int> (coins.size(),-1));
+        return helper(coins,amount,0,dp);   
+    }
+};
