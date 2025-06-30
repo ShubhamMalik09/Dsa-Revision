@@ -1,0 +1,32 @@
+# same a longest common subsequence 
+# to find palindromic subsequence just reverse the given string 
+# and find common in between then it will always a palindrome
+
+class Solution {
+public:
+    int helperSO(string& s1,string& s2){
+        vector<int> dp(s2.size()+1,0);
+        vector<int> dp2(s2.size()+1,0);
+        
+        for(int i=s1.size()-1;i>=0;i--){
+            for(int j=s2.size()-1;j>=0;j--){
+                int ans=0;
+                if(s1[i]==s2[j]){
+                    ans = 1 + dp[j+1];
+                }
+                else{
+                    ans = max(dp[j], dp2[j+1]);
+                }
+                dp2[j] = ans;
+            }
+            dp=dp2;
+        }
+
+        return dp[0];
+    }
+    int longestPalindromeSubseq(string s) {
+        string s2 = s;
+        reverse(s2.begin(), s2.end());
+        return helperSO(s,s2);
+    }
+};
