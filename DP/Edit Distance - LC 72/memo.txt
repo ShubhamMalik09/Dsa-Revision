@@ -1,0 +1,40 @@
+# Find the mini no of changes insertion, deletion, replaction to make string 1 equal to string 2
+# if string 2 completed then have to delete all the char after the s2 size
+# if s1 completed then have to insert the remaining char
+
+# if both the char at i and j same then do not need to do any operation cost 0
+# if insertion then only j increases cost 1
+# if deletion then only i increases cost 1
+# if replacment then both i and j increases cost 1
+
+class Solution {
+public:
+    int helperRec(string &s1,string &s2, int i, int j, vector<vector<int>> &dp){
+        if(i>=s1.size()){
+            return s2.size()-j;
+        }
+        if(j>=s2.size()){
+            return s1.size()-i;
+        }
+
+        if(dp[i][j]!=-1){
+            return dp[i][j];
+        }
+
+        int ans=0;
+        if(s1[i]==s2[j]){
+            ans = 0 + helperRec(s1,s2,i+1,j+1,dp); 
+        } else{
+            ans = 1 + min(helperRec(s1,s2,i+1,j,dp),min(helperRec(s1,s2,i+1,j+1,dp),helperRec(s1,s2,i,j+1,dp)));
+        }
+
+        dp[i][j] = ans;
+
+        return dp[i][j];
+
+    }
+    int minDistance(string word1, string word2) {
+        vector<vector<int>> dp(word1.size(),vector<int>(word2.size(),-1));
+        return helperRec(word1,word2,0,0,dp);   
+    }
+};

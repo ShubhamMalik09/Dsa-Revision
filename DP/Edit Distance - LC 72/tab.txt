@@ -1,0 +1,35 @@
+class Solution {
+public:
+
+    int helperTab(string &a, string& b){
+        vector<vector<int>> dp(a.size()+1,vector<int>(b.size()+1,-1));
+
+        for(int col =0;col<=b.length();col++){
+            dp[a.length()][col] = b.length()-col;
+        }
+        for(int row =0;row<=a.length();row++){
+            dp[row][b.length()] = a.length()-row;
+        }
+
+        for(int i=a.length()-1;i>=0;i--){
+            for(int j=b.length()-1;j>=0;j--){
+                int ans=0;
+                if(a[i]==b[j]){
+                    ans = 0 + dp[i+1][j+1]; 
+                } else{
+                    ans = 1 + min(dp[i+1][j], min(dp[i+1][j+1], dp[i][j+1]));
+                }
+                dp[i][j] = ans;
+            }
+        }
+
+
+        return dp[0][0];
+
+
+    }
+
+    int minDistance(string word1, string word2) {
+        return helperTab(word1,word2);   
+    }
+};
