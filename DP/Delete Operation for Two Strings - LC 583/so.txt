@@ -1,0 +1,38 @@
+# so same as edit distance
+# need to revise this type of edge cases
+
+class Solution {
+public:
+
+    int helperSO(string &a, string &b){
+        vector<int> next(b.length()+1,-1);
+        vector<int> curr(b.length()+1,-1);
+
+        for(int col=b.length();col>=0;col--){
+            next[col]= b.length()-col;
+        }
+
+        for(int i=a.length()-1;i>=0;i--){
+            curr[b.length()] = a.length()-i;
+            for(int j=b.length()-1;j>=0;j--){
+                int ans=0;
+                if(a[i]==b[j]){
+                    ans = 0 + next[j+1]; 
+                } else{
+                    ans = 1 + min(next[j],curr[j+1]);
+                }
+                curr[j]=ans;
+            }
+
+            next=curr;
+        }
+
+        return next[0];
+    }
+
+
+
+    int minDistance(string word1, string word2) {
+        return helperSO(word1,word2);
+    }
+};
