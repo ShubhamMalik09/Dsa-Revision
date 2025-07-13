@@ -1,0 +1,27 @@
+# as our answer is building in sorted order then we can use binary search
+# so if the number getting is greater than the end of ans then we put it
+# else we replace that number with its just greater number 
+# to find just greater number or that number we can use lower_bound (find lower_bound using binary search)
+
+class Solution {
+public:
+    int helperBinarySearch(vector<int> &nums){
+        vector<int> ans;
+        ans.push_back(nums[0]);
+        for(int i=0;i<nums.size();i++){
+            if(nums[i] > ans.back()){
+                ans.push_back(nums[i]);
+            }
+            else{
+                int idx = lower_bound(ans.begin(),ans.end(),nums[i]) - ans.begin();
+                ans[idx] = nums[i];
+            }
+        }
+
+        return ans.size();
+    }
+    
+    int lengthOfLIS(vector<int>& nums) {
+        return helperBinarySearch(nums);
+    }
+};

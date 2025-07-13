@@ -1,0 +1,34 @@
+#uses 0/1 kansack pick non pick approach
+# in this we in start passing prev as -1 and -1 index do not exists
+
+## so we shift all prev index by 1 so minimum possible index should be 0
+
+
+class Solution {
+public:
+    int helperMemo(vector<int>& nums, int curr, int prev, vector<vector<int>> &dp){
+        if(curr>=nums.size()) return 0;
+
+        if(dp[curr][prev+1] != -1){
+            return dp[curr][prev+1];
+        }
+
+        int pick = 0;
+        if(prev==-1 || nums[curr]>nums[prev]){
+            pick = 1 + helperRec(nums,curr+1,curr,dp);
+        }
+        int unpick = helperRec(nums,curr+1,prev,dp);
+
+        dp[curr][prev+1] =  max(pick,unpick);
+
+        return dp[curr][prev+1];
+
+    }
+    int lengthOfLIS(vector<int>& nums) {
+        int prev =-1;
+        int curr = 0;
+        int n = nums.size();
+        vector<vector<int>> dp(n,vector<int>(n+1,-1));
+        return helperRec(nums,curr,prev,dp);
+    }
+};
