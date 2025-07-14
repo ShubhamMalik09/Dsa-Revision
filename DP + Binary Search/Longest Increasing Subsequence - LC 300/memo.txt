@@ -4,6 +4,9 @@
 ## so we shift all prev index by 1 so minimum possible index should be 0
 
 
+### this apporach is used when we have a stacking thing like bigger to smaller or smaller to bigger and find maximum number, length or etc
+
+
 class Solution {
 public:
     int helperMemo(vector<int>& nums, int curr, int prev, vector<vector<int>> &dp){

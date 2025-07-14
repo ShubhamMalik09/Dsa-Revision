@@ -1,0 +1,46 @@
+# have to find the maximum length in which next box (height, length, width) should be less than curr
+# so pile like structure in which all next is greater or all next is smaller
+
+## THerefore, longest increasing subsequence
+
+
+class Solution {
+public:
+    bool check(vector<int> &curr, vector<int> prev){
+        if(prev[0] <= curr[0] && prev[1]<= curr[1] && prev[2]<=curr[2]){
+            return true;
+        }
+
+        return false;
+    }
+
+    int helperSO(vector<vector<int>>& cuboids){
+        int n = cuboids.size();
+        vector<int> curr(n+1,0);
+        vector<int> next(n+1,0);
+
+        for(int cidx = n-1;cidx>=0;cidx--){
+            for(int prev = cidx-1;prev>=-1;prev--){
+                int include = 0;
+                if(prev == -1 || check(cuboids[cidx], cuboids[prev])){
+                    include = cuboids[cidx][2] + next[cidx+1];
+                }
+                int exclude = 0 + next[prev+1];
+                curr[prev+1] = max(include,exclude);
+            }
+            next = curr;
+        }
+
+        return next[0];
+    }
+    int maxHeight(vector<vector<int>>& cuboids) {
+        for(auto &cuboid: cuboids){
+            sort(cuboid.begin(),cuboid.end());
+        }
+
+        sort(cuboids.begin(),cuboids.end());
+
+        int ans = helperSO(cuboids);
+        return ans;
+    }
+};

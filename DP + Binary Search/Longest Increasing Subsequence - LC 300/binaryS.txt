@@ -3,6 +3,8 @@
 # else we replace that number with its just greater number 
 # to find just greater number or that number we can use lower_bound (find lower_bound using binary search)
 
+### this apporach is used when we have a stacking thing like bigger to smaller or smaller to bigger and find maximum number, length or etc
+
 class Solution {
 public:
     int helperBinarySearch(vector<int> &nums){
